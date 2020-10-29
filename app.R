@@ -11,6 +11,7 @@ library(shiny)
 library(tidyverse)
 
 boston_cocktails <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-26/boston_cocktails.csv')
+head(boston_cocktails)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -18,23 +19,19 @@ ui <- fluidPage(
     # Application title
     titlePanel("New England Cocktails"),
 
-    # Sidebar with a slider input for number of bins
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
-        ),
-
-        # Show a plot of the generated distribution
-        mainPanel(
-           plotOutput("distPlot")
-        )
+    # Copy the chunk below to make a group of checkboxes
+    checkboxGroupInput("checkGroup", label = h3("Checkbox group"), 
+                       choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+                       selected = 1),
+    
+    
+    hr(),
+    fluidRow(column(3, verbatimTextOutput("value")))
+    
     )
-)
 
+    
+    
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
@@ -47,6 +44,17 @@ server <- function(input, output) {
         hist(x, breaks = bins, col = 'darkgray', border = 'white')
     })
 }
+
+# Copy the chunk below to make a group of checkboxes
+checkboxGroupInput("checkGroup", label = h3("Checkbox group"), 
+                   choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+                   selected = 1),
+
+
+hr(),
+fluidRow(column(3, verbatimTextOutput("value")))
+
+)
 
 # Run the application
 shinyApp(ui = ui, server = server)
