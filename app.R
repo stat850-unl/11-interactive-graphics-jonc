@@ -16,7 +16,7 @@ boston_cocktails <- read_csv('https://raw.githubusercontent.com/rfordatascience/
 ui <- fluidPage(
 
     # Application title
-    titlePanel("Old Faithful Geyser Data"),
+    titlePanel("New England Cocktails"),
 
     # Sidebar with a slider input for number of bins
     sidebarLayout(
