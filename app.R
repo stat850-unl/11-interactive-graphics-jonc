@@ -21,29 +21,24 @@ ui <- fluidPage(
 
     fluidPage(
 
-        # Copy the chunk below to make a group of checkboxes
-        checkboxGroupInput("checkGroup", label = h3("Drink Category"),
-                           choices = list("Vodka" = 1, "Tequila" = 2, "Cocktail Classics" = 3),
-                           selected = 1),
-
-
-        hr(),
-        fluidRow(column(3, verbatimTextOutput("value"))),
-
-        checkboxGroupInput("checkGroup", label = h3("Juice Type"),
-                           choices = list("Pineapple" = 1, "Orange" = 2, "Apple" = 3),
-                           selected = 1),
-
-
+        # Copy the chunk below to make a group of RadioButtons
+        radioButtons("radio", label = h3("Drink Category"),
+                     choices = list("Vodka" = 1, "Tequila" = 2, "Cocktail Classics" = 3), 
+                     selected = 1),
+        
         hr(),
         fluidRow(column(3, verbatimTextOutput("value")))
-
-
-
+        
     )
-)
 
-
+    radioButtons("radio", label = h3("Juice Type"),
+                 choices = list("Pineapple" = 1, "Orange" = 2, "Apple" = 3), 
+                 selected = 1),
+    
+    hr(),
+    fluidRow(column(3, verbatimTextOutput("value")))
+    
+)  
 
 
 # Define server logic required to draw a histogram
