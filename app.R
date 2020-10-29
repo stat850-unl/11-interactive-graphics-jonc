@@ -17,18 +17,32 @@ head(boston_cocktails)
 ui <- fluidPage(
 
     # Application title
-    titlePanel("New England Cocktails"),
+    titlePanel("New England Cocktails For Dummies"),
 
-    # Copy the chunk below to make a group of checkboxes
-    checkboxGroupInput("checkGroup", label = h3("Checkbox group"), 
-                       choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
-                       selected = 1),
-    
-    
-    hr(),
-    fluidRow(column(3, verbatimTextOutput("value")))
-    
+    fluidPage(
+        
+        # Copy the chunk below to make a group of checkboxes
+        checkboxGroupInput("checkGroup", label = h3("Drink Category"),
+                           choices = list("Vodka" = 1, "Tequila" = 2, "Cocktail Classics" = 3),
+                           selected = 1),
+        
+        
+        hr(),
+        fluidRow(column(3, verbatimTextOutput("value"))),
+        
+        checkboxGroupInput("checkGroup", label = h3("Juice Type"),
+                           choices = list("Pineapple" = 1, "Orange" = 2, "Apple" = 3),
+                           selected = 1),
+        
+        
+        hr(),
+        fluidRow(column(3, verbatimTextOutput("value")))
+        
+        
+        
     )
+)
+
 
     
     
@@ -45,16 +59,18 @@ server <- function(input, output) {
     })
 }
 
-# Copy the chunk below to make a group of checkboxes
-checkboxGroupInput("checkGroup", label = h3("Checkbox group"), 
-                   choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
-                   selected = 1),
-
-
-hr(),
-fluidRow(column(3, verbatimTextOutput("value")))
-
-)
 
 # Run the application
 shinyApp(ui = ui, server = server)
+
+# fluidPage(
+# 
+#     # Copy the chunk below to make a group of checkboxes
+#     checkboxGroupInput("checkGroup", label = h3("Checkbox group"),
+#                        choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+#                        selected = 1),
+# 
+# 
+#     hr(),
+#     fluidRow(column(3, verbatimTextOutput("value")))
+# 
