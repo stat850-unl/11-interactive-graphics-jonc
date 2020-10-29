@@ -50,7 +50,7 @@ ui <- fluidPage(
 server <- function(input, output) {
 
     server = function(input, output) {
-        output$table <- renderDataTable(iris,
+        output$table <- renderDataTable(boston_cocktails,
                                         options = list(
                                             pageLength = 5,
                                             initComplete = I("function(settings, json) {alert('Done.');}")
