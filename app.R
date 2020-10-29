@@ -9,13 +9,15 @@
 
 library(shiny)
 
+boston_cocktails <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-26/boston_cocktails.csv')
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
 
     # Application title
     titlePanel("Old Faithful Geyser Data"),
 
-    # Sidebar with a slider input for number of bins 
+    # Sidebar with a slider input for number of bins
     sidebarLayout(
         sidebarPanel(
             sliderInput("bins",
@@ -45,5 +47,5 @@ server <- function(input, output) {
     })
 }
 
-# Run the application 
+# Run the application
 shinyApp(ui = ui, server = server)
