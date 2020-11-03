@@ -36,22 +36,26 @@ ui <- fluidPage(
                  selected = 1),
     
     hr(),
-    fluidRow(column(3, verbatimTextOutput("value")))
+    fluidRow(column(3, verbatimTextOutput("value"))),
     
+    
+    #We need this next line somewhere because that is how the renderDataTable talks to the ui. Beyond that I'm a little lost still.
+    dataTableOutput("drink_table")
 )  
 
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-
+    juice_search <- str_to_lower(input$juice) %>%
+        # paste("\b", ., "\b", sep = "") %>%
+        paste(collapse = "|")
+    
+    fruity_drink<-boston_cocktails %>%
+        filter(str_detect(ingredient, juice_search)) %>%
+        select(name)
     server = function(input, output) {
-        output$table <- renderDataTable(boston_cocktails,
-                                        options = list(
-                                            pageLength = 5,
-                                            initComplete = I("function(settings, json) {alert('Done.');}")
-                                        )
-        )
-    }
+        output$drink_table <- renderDataTable(fruity_drink)
+            }
 }
 
 
@@ -71,14 +75,7 @@ shinyApp(ui = ui, server = server)
 #
 # drink names with correct category and type of juice
 
-juice_search <- str_to_lower(input$juice) %>%
-    # paste("\b", ., "\b", sep = "") %>%
-    paste(collapse = "|")
 
-boston_cocktails %>%
-    filter(category %in% input$booze) %>%
-    filter(str_detect(ingredient, juice_search)) %>%
-    select(name)
 
 
 
