@@ -19,29 +19,59 @@ head(boston_cocktails)
 library(ggplot2)
 
 ui <- fluidPage(
-    titlePanel("Basic DataTable"),
-    
-    # Create a new Row in the UI for selectInputs
+    titlePanel("New England Cocktails for Dummies"),
+
+    # Create a new Row in the UI for select Inputs
     fluidRow(
         column(4,
-               selectInput("man",
-                           "Manufacturer:",
+               selectInput("Boo",
+                           "Booze:",
                            c("All",
-                             unique(as.character(mpg$manufacturer))))
+                             unique(as.character(boston_cocktails$category))))
         ),
         column(4,
-               selectInput("trans",
-                           "Transmission:",
+               selectInput("Jui",
+                           "Ingredient:",
                            c("All",
-                             unique(as.character(mpg$trans))))
+                             unique(as.character(boston_cocktails$ingredient))))
         ),
-        column(4,
-               selectInput("cyl",
-                           "Cylinders:",
-                           c("All",
-                             unique(as.character(mpg$cyl))))
-        )
     ),
     # Create a new row for the table.
     DT::dataTableOutput("table")
 )
+
+
+library(ggplot2)
+
+function(input, output) {
+
+    # Filter data based on selections
+    output$table <- DT::renderDataTable(DT::datatable({
+        data <- boston_cocktails
+        if (input$category != "All") {
+            data <- data[data$manufacturer == input$category,]
+        }
+        if (input$ingredient != "All") {
+            data <- data[data$cyl == input$ingredient,]
+        }
+        data
+    }))
+
+}
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+
+    server = function(input, output) {
+        output$table <- renderDataTable(boston_cocktails,
+                                        options = list(
+                                            pageLength = 5,
+                                            initComplete = I("function(settings, json) {alert('Done.');}")
+                                        )
+        )
+    }
+}
+
+
+# Run the application
+shinyApp(ui = ui, server = server)

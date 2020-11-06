@@ -15,30 +15,27 @@ head(boston_cocktails)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
+    titlePanel("New England Cocktails for Dummies"),
 
-    # Application title
-    titlePanel("New England Cocktails For Dummies"),
+    # Create a new Row in the UI for select Inputs
+    fluidRow(
+        column(4,
+               selectInput("Boo",
+                           "Booze:",
+                           c("All",
+                             unique(as.character(boston_cocktails$category))))
+        ),
+        column(4,
+               selectInput("Jui",
+                           "Ingredient:",
+                           c("All",
+                             unique(as.character(boston_cocktails$ingredient))))
+        ),
+    ),
+    # Create a new row for the table.
+    DT::dataTableOutput("table")
+)
 
-    fluidPage(
-
-        # Copy the chunk below to make a group of checkboxes
-        radioButtons("radio", label = h3("Drink Category"),
-                     choices = list("Vodka" = 1, "Tequila" = 2, "Cocktail Classics" = 3), 
-                     selected = 1),
-        
-        hr(),
-        fluidRow(column(3, verbatimTextOutput("value")))
-        
-    )
-        
-    radioButtons("radio", label = h3("Juice Type"),
-                 choices = list("Pineapple" = 1, "Orange" = 2, "Apple" = 3), 
-                 selected = 1),
-    
-    hr(),
-    fluidRow(column(3, verbatimTextOutput("value")))
-    
-)  
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
