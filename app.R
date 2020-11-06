@@ -14,86 +14,34 @@ boston_cocktails <- read_csv('https://raw.githubusercontent.com/rfordatascience/
 head(boston_cocktails)
 
 # Define UI for application that draws a histogram
+# Load the ggplot2 package which provides
+# the 'mpg' dataset.
+library(ggplot2)
+
 ui <- fluidPage(
-
-    # Application title
-    titlePanel("New England Cocktails For Dummies"),
-
-    fluidPage(
-
-        # Copy the chunk below to make a group of RadioButtons
-        radioButtons("booze", label = h3("Drink Category"),
-                     choices = list("Vodka" = 1, "Tequila" = 2, "Cocktail Classics" = 3), 
-                     selected = 1),
-        
-        hr(),
-        fluidRow(column(3, verbatimTextOutput("value")))
-        
+    titlePanel("Basic DataTable"),
+    
+    # Create a new Row in the UI for selectInputs
+    fluidRow(
+        column(4,
+               selectInput("man",
+                           "Manufacturer:",
+                           c("All",
+                             unique(as.character(mpg$manufacturer))))
+        ),
+        column(4,
+               selectInput("trans",
+                           "Transmission:",
+                           c("All",
+                             unique(as.character(mpg$trans))))
+        ),
+        column(4,
+               selectInput("cyl",
+                           "Cylinders:",
+                           c("All",
+                             unique(as.character(mpg$cyl))))
+        )
     ),
-
-    radioButtons("juice", label = h3("Juice Type"),
-                 choices = list("Pineapple" = 1, "Orange" = 2, "Apple" = 3), 
-                 selected = 1),
-    
-    hr(),
-    fluidRow(column(3, verbatimTextOutput("value"))),
-    
-    
-    #We need this next line somewhere because that is how the renderDataTable talks to the ui. Beyond that I'm a little lost still.
-    dataTableOutput("drink_table")
-)  
-
-
-# Define server logic required to draw a histogram
-server <- function(input, output) {
-    juice_search <- str_to_lower(input$juice) %>%
-        # paste("\b", ., "\b", sep = "") %>%
-        paste(collapse = "|")
-    
-    fruity_drink<-boston_cocktails %>%
-        filter(str_detect(ingredient, juice_search)) %>%
-        select(name)
-    server = function(input, output) {
-        output$drink_table <- renderDataTable(fruity_drink)
-            }
-}
-
-
-# Run the application
-shinyApp(ui = ui, server = server)
-
-# fluidPage(
-#
-#     # Copy the chunk below to make a group of checkboxes
-#     checkboxGroupInput("checkGroup", label = h3("Checkbox group"),
-#                        choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
-#                        selected = 1),
-#
-#
-#     hr(),
-#     fluidRow(column(3, verbatimTextOutput("value")))
-#
-# drink names with correct category and type of juice
-
-
-
-
-
-# --------------------------------
-
-
-# Take multiple juice options and look for any matches
-juice_search <- str_to_lower(input$juice) %>%
-    # paste("\b", ., "\b", sep = "") %>%
-    paste(collapse = "|")
-
-
-
-
-
-
-
-boston_cocktails %>%
-    filter(category %in% input$booze) %>%
-    filter(str_detect(ingredient, input$juice)) %>%
-    select(name)
+    # Create a new row for the table.
+    DT::dataTableOutput("table")
+)
