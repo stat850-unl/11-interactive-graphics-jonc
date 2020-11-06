@@ -40,10 +40,10 @@ function(input, output) {
     output$table <- DT::renderDataTable(DT::datatable({
         data <- boston_cocktails
         if (input$category != "All") {
-            data <- data[data$manufacturer == input$category,]
+            data <- data[data$category == input$Boo,]
         }
         if (input$ingredient != "All") {
-            data <- data[data$cyl == input$ingredient,]
+            data <- data[data$ingredient == input$Jui,]
         }
         data
     }))
