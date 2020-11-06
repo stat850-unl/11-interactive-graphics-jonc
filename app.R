@@ -50,18 +50,6 @@ function(input, output) {
 
 }
 
-# Define server logic required to draw a histogram
-server <- function(input, output) {
-
-    server = function(input, output) {
-        output$table <- renderDataTable(boston_cocktails,
-                                        options = list(
-                                            pageLength = 5,
-                                            initComplete = I("function(settings, json) {alert('Done.');}")
-                                        )
-        )
-    }
-}
 
 
 # Run the application
