@@ -34,7 +34,9 @@ ui <- fluidPage(
 
 library(ggplot2)
 
-function(input, output) {
+
+
+server <- function(input, output) {
 
     # Filter data based on selections
     output$table <- DT::renderDataTable(DT::datatable({
@@ -49,7 +51,6 @@ function(input, output) {
     }))
 
 }
-
 
 
 # Run the application
