@@ -39,10 +39,10 @@ function(input, output) {
     # Filter data based on selections
     output$table <- DT::renderDataTable(DT::datatable({
         data <- boston_cocktails
-        if (input$category != "All") {
+        if (input$Boo != "All") {
             data <- data[data$category == input$Boo,]
         }
-        if (input$ingredient != "All") {
+        if (input$Jui != "All") {
             data <- data[data$ingredient == input$Jui,]
         }
         data
